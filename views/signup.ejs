@@ -1,0 +1,99 @@
+<%- include('partials/header.ejs') %>
+<div class="container">
+  <div class="alert"></div>
+  <h2>Sign Up</h2>
+  <form>
+    <label for="username">
+      <span>Username</span>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Insert your username"
+        required
+      />
+      <p class="username err"></p>
+    </label>
+    <label for="email">
+      <span>Email</span>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Insert your email"
+        required
+      />
+      <p class="email err"></p>
+    </label>
+    <label for="password">
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Insert your password"
+        required
+      />
+      <p class="password err"></p>
+    </label>
+    <button>Sign up</button>
+  </form>
+  <p>Already have an account? <a href="login">Log in</a></p>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const button = document.querySelector("button");
+  const usernameError = document.querySelector(".username.err");
+  const emailError = document.querySelector(".email.err");
+  const passwordError = document.querySelector(".password.err");
+  const alert = document.querySelector(".alert");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    button.disabled = true;
+    usernameError.textContent = "";
+    emailError.textContent = "";
+    passwordError.textContent = "";
+
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({ username, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      button.disabled = false;
+      alert.textContent = data.message ? data.message : "";
+
+      alert.style.opacity = 1;
+      alert.style.visibility = "visible";
+
+      setTimeout(() => {
+        alert.style.opacity = 0;
+        alert.addEventListener("transitionend", () => {
+          alert.style.visibility = "hidden";
+        });
+      }, 4000);
+
+
+      if (data.errors) {
+        usernameError.textContent = data.errors.username;
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+      }
+
+      form.email.value = "";
+      form.username.value = "";
+      form.password.value = "";
+    } catch (err) {}
+  });
+</script>
+<%- include('partials/footer.ejs') %>

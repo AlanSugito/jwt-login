@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+body {
+    height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+button {
+    max-width: max-content;
+    background-color: slategray;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: rgb(36, 36, 36);
+}
+
+.err {
+    color: red;
+    font-weight: 500;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.alert {
+    padding: 10px 20px;
+    background-color: rgb(99, 255, 99);
+    border: 2px solid green;
+    border-radius: 10px;
+    color: green;
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s;
+}
+
+
+.in-out {
+    animation: fade-in-out 8s forwards ;
+}
+
+.name {
+    animation: fade forwards 3s;
+    opacity: 0;
+    text-transform: capitalize;
+}
+
+@keyframes fade {
+    to{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes fade-in-out {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+    20% {
+        opacity: 1;
+    }
+    95%{
+
+        opacity: 0;
+    }
+    100% {
+        visibility: hidden;
+    }
+}
+
+input {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid slategray;
+    transition: .3s;
+    padding: 10px 20px;
+    width: 300px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: rgb(190, 197, 204);
+}
+
+input:focus {
+    border-color: black;
+    border-width: 3px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: max-content;
+    border: 2px solid slategray;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+

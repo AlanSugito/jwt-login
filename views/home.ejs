@@ -1,0 +1,15 @@
+<%- include('partials/header.ejs') %>
+
+    <h1 class="name">Hello <span><%= user.username %></span> </h1> 
+
+    <script>
+        const colors = ['red', "green", "lime", "cyan", "orange", "royalblue", "purple", "violet", "slategray", "black", ""]
+        const name = document.querySelector("span")
+
+        setInterval(() => {
+            let randomColor = Math.floor(Math.random() * colors.length)
+            name.style.color = colors[randomColor]
+            name.style.textShadow = `10px 20px 30px ${colors[randomColor]}`
+        }, 1000)
+    </script>
+<%- include('partials/footer') %> 

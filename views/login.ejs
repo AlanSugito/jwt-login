@@ -1,0 +1,66 @@
+<%- include('partials/header.ejs') %>
+<div class="container">
+  <h2>Login</h2>
+  <form>
+    <label for="email">
+      <span>Email</span>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Insert your email"
+        required
+        autocomplete="off"
+      />
+      <p class="email err"></p>
+    </label>
+    <label for="password">
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Insert your password"
+        required
+      />
+      <p class="password err"></p>
+    </label>
+    <button>Log in</button>
+  </form>
+  <p>Still not have an account? <a href="signup">Sign up</a></p>
+</div>
+
+<script>
+  const form = document.querySelector("form");
+  const emailError = document.querySelector(".email.err")
+  const passwordError = document.querySelector(".password.err")
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      if (data.message) {
+          alert(data.message);
+          document.location.href = '/'
+      }
+
+
+      emailError.textContent = data.errors.email
+      passwordError.textContent = data.errors.password
+
+    } catch (err) {}
+  });
+</script>
+<%- include('partials/footer.ejs') %>
